@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive World Map: Top 10 Largest Countries</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel=" stylesheet" href=" leaflet.js"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css">
+    <style>
+        /* Make sure the map container takes up the whole screen */
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            font-size: 36px;
+            color: #2e3b4e;
+        }
+        #legend {
+            font-size: 14px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Top 10 Largest Countries by Area</h1>
+    <div id="legend">
+        <b>Legend:</b> Countries in order of size are marked on the map.
+    </div>
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+        // Initialize the map centered around the world
+        var map = L.map('map').setView([20, 0], 2);  // Centering map at lat: 20, lon: 0, with zoom level 2
+
+        // OpenStreetMap Tile Layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Top 10 Largest Countries by Area with Rank and Facts
+        var countries = [
+            {
+                rank: 1,
+                name: "Russia",
+                lat: 55.7558,
+                lon: 37.6176,
+                area: "17,098,242 km²",
+                facts: [
+                    "Largest country in the world.",
+                    "Spans 11 time zones.",
+                    "Has the world's longest railroad.",
+                    "Home to Lake Baikal, the world's deepest freshwater lake.",
+                    "It is a permanent member of the UN Security Council."
+                ],
+                icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Flag_of_Russia.svg/320px-Flag_of_Russia.svg.png'
+            },
+            {
+                rank: 2,
+                name: "Canada",
+                lat: 56.1304,
+                lon: -106.3468,
+                area: "9,984,670 km²",
+                facts: [
+                    "Second-largest country by area.",
+                    "Home to the longest coastline in the world.",
+                    "Has more lakes than any other country.",
+                    "Has the largest national park in the world (Wood Buffalo National Park).",
+                    "Canada is known for its maple syrup."
+                ],
+                icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Flag_of_Canada.svg/320px-Flag_of_Canada.svg.png'
+            },
+            {
+                rank: 3,
+                name: "United States",
+                lat: 37.0902,
+                lon: -95.7129,
+                area: "9,826,675 km²",
+                facts: [
+                    "Third-largest country by area.",
+                    "Spans 50 states and multiple time zones.",
+                    "Has the most Nobel Prize winners.",
+                    "Has the world's largest economy.",
+                    "Contains the Grand Canyon, one of the seven natural wonders."
+                ],
+                icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/320px-Flag_of_the_United_States.svg.png'
+            },
+            {
+                rank: 4,
+                name: "China",
+                lat: 39.9042,
+                lon: 116.4074,
+                area: "9,596,961 km²",
+                facts: [
+                    "Fourth-largest country by area.",
+                    "Most populous country in the world.",
+                    "The Great Wall of China is the longest wall in the world.",
+                    "Home to the world's largest high-speed rail network.",
+                    "Has the fastest growing space program."
+                ],
+                icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Flag_of_China.svg/320px-Flag_of_China.svg.png'
+            },
+            {
+                rank: 5,
+                name: "Brazil",
+                lat: -14.2350,
+                lon: -51.9253,
+                area: "8,515,767 km²",
+                facts: [
+                    "Largest country in South America.",
+                    "Home to the Amazon Rainforest, the world's largest tropical rainforest.",
+                    "Is the leading producer of coffee.",
+                    "Has the world's largest river by volume (Amazon River).",
+                    "Brazil is the only country to have appeared in every FIFA World Cup."
+                ],
+                icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/320px-Flag_of_Brazil.svg.png'
+            },
+            {
+                rank: 6,
+                name: "Australia",
+                lat: -25.276987,
+                lon: 133.775136,
+                area: "7,692,024 km²",
+                facts: [
+                    "Is both a country and a continent.",
+                    "Has the world’s longest fence (Dingo Fence).",
+                    "Known for the Great Barrier Reef, the world’s largest coral reef system.",
+                    "Home to many unique animals, including kangaroos and koalas.",
+                    "Australia has the world's oldest surviving culture (Aboriginal peoples)."
+                ],
+                icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Australia.svg/320px-Flag_of_Australia.svg.png'
+            },
+            {
+                rank: 7,
+                name: "India",
+                lat: 20.5937,
+                lon: 78.9629,
+                area: "3,287,263 km²",
+                facts: [
+                    "Second-most populous country in the world.",
+                    "Known for the Taj Mahal, one of the Seven Wonders of the World.",
+                    "Has the largest film industry in the world (Bollywood).",
+                    "Is home to the oldest known urban civilization (Indus Valley).",
+                    "Has the world's largest postal network."
+                ],
+                icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/320px-Flag_of_India.svg.png'
+            },
+            {
+                rank: 8,
+                name: "Argentina",
+                lat: -38.4161,
+                lon: -63.6167,
+                area: "2,780,400 km²",
+                facts: [
+                    "Eighth-largest country in the world.",
+                    "Has the longest mountain range in the world (Andes).",
+                    "Known for tango dance and music.",
+                    "Produces the most wine in the Southern Hemisphere.",
+                    "Has the largest species of bird, the Andean Condor."
+                ],
+                icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/320px-Flag_of_Argentina.svg.png'
+            },
+            {
+                rank: 9,
+                name: "Kazakhstan",
+                lat: 48.0196,
+                lon: 66.9237,
+                area: "2,724,900 km²",
+                facts: [
+                    "Ninth-largest country by area.",
+                    "Has the world's largest landlocked country.",
+                    "Home to the Baikonur Cosmodrome, the world's oldest spaceport.",
+                    "Has a desert called the Aral Sea, which is shrinking.",
+                    "Kazakhstan is rich in natural resources like oil and gas."
+                ],
+                icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Flag_of_Kazakhstan.svg/320px-Flag_of_Kazakhstan.svg.png'
+            },
+            {
+                rank: 10,
+                name: "Algeria",
+                lat: 28.0339,
+                lon: 1.6596,
+                area: "2,381,741 km²",
+                facts: [
+                    "Tenth-largest country in the world.",
+                    "Has a coastline along the Mediterranean Sea.",
+                    "Is mostly desert (Sahara Desert).",
+                    "Is the largest country in Africa.",
+                    "Has the largest number of Roman ruins in North Africa."
+                ],
+                icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_of_Algeria.svg/320px-Flag_of_Algeria.svg.png'
+            }
+        ];
+
+        // Custom Marker Icons and Popup Content
+        countries.forEach(function(country) {
+            var icon = L.icon({
+                iconUrl: country.icon,
+                iconSize: [32, 32],  // Size of the icon
+                iconAnchor: [16, 32],  // Anchor point for the icon
+                popupAnchor: [0, -32]  // Popup anchor point
+            });
+
+            var marker = L.marker([country.lat, country.lon], { icon: icon }).addTo(map);
+            var popupContent = `<b>Rank: ${country.rank}</b><br><b>${country.name}</b><br>Area: ${country.area}<br><ul>`;
+
+            country.facts.forEach(function(fact) {
+                popupContent += `<li>${fact}</li>`;
+            });
+            popupContent += "</ul>";
+
+            marker.bindPopup(popupContent);
+        });
+    </script>
+</body>
+</html>
